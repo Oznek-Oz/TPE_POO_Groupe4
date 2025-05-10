@@ -48,6 +48,35 @@ public class Main {
 
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
+      
+/*EXERCICE11 */
+        System.out.println(a instanceof A); 
+        System.out.println(ab instanceof A); 
+        System.out.println(b instanceof A); 
+        System.out.println(a instanceof B); 
+        System.out.println(ab instanceof B); 
+        System.out.println(b instanceof B);
+     
+/* Analyse de chaque ligne :
+
+a instanceof A → true
+a est une instance directe de A.
+
+ab instanceof A → true
+ab est une instance de B, mais B hérite de A, donc ab est aussi une instance de A.
+
+b instanceof A → true
+b est une instance de B, et comme B hérite de A, c’est aussi une instance de A.
+
+a instanceof B → false
+a est une instance directe de A, pas de B.
+
+ab instanceof B → true
+Même si ab est typé comme A, il a été instancié comme new B(), donc il est bien une instance de B.
+
+b instanceof B → true
+b est une instance directe de B.
+*/
 
 //EXERCICE-8-9-10
         A a = new A();
