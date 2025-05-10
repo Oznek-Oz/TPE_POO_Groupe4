@@ -43,7 +43,7 @@ public class Main {
 
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
-
+//EXERCICE-8-9-10
         A a = new A();
         A ab = new B();
         B b = new B();
