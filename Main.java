@@ -30,11 +30,6 @@ public class Main {
         SlantedRectangle srect1 = new SlantedRectangle(P1 , 10 , 5);
 
         srect1.containRect(rect1);
-        //Rotation
-        System.out.print("\nAVANT ROTATION: \n");
-        srect1.rotate(0);
-        System.out.print("\nAPRES ROTATION LES NOUVELLES COORDONNEES SONT: \n\n");
-        srect1.rotate(2);
 
         Point basDroit = new Point(srect1.point.getAbs() + srect1.longueur , srect1.point.getOrd());
         Point hautGauche = new Point(srect1.point.getAbs(), srect1.point.getOrd() + srect1.hauteur);
@@ -48,21 +43,6 @@ public class Main {
 
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
-      
-      //EXERCICE 8-9-10
-        A a = new A ();
-        A ab =new B ();
-        B b = new B ();
-
-        a.f(a);
-        a.f(ab);
-        a.f(b);
-        ab.f(a);
-        ab.f(ab);
-        ab.f(b);
-        b.f(a);
-        b.f(ab);
-        b.f(b);
 
     }
 }
@@ -206,6 +186,7 @@ class SlantedRectangle extends Rectangle {
         super(p1 , longueur , hauteur);
         this.angle = angle;
         float ANGLE = angle * (float)Math.PI / 180 ;
+        Point p3 = new Point(longueur * (float)Math.cos(ANGLE) , hauteur * (float)Math.sin(ANGLE));
     }
 
     /** MÃ©thode de la rotation
@@ -239,114 +220,4 @@ class SlantedRectangle extends Rectangle {
     public void afficherCoordonnee (String nomPoint , Point p) {
         System.out.println("Les coordonnÃ©es du point " + nomPoint + " sont : (" + p.getAbs() + " ; " + p.getOrd() + ")");
     }
-
-
-}
-
-
-
-// *************exercice 9************
-
-class A {
-    // Ajout de la methode suivante a la class B
-    void f(A o) {
-        System.out.println("void f(A o) dans A classe:"+o.getClass());
-    }
-    //1)Il s'agit ici d'une redefinition
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode B
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-*/
-}
-//***********EXERCICE 10***********
-class B extends A {
-     // Ajout de la methode suivante a la class A
-   // void f(A o) {
-    void f(A o) {
-        System.out.println("void f(A o) dans B ");
-    }
-    void f(B o) {
-        System.out.println("void f(B o) dans B");
-
-}
-// Taffo-Oneil(exercices-5-12-13)
-
-/*
-                                        TPE : PROGRAMMATION ORIENTE OBJECT
-
-
-                                                    Exercice 5
-
-
-  La réponse est oui, la classe DESSIN peut contenir des slantedRectangle. En effet, grâce au polymorphisme, un tableau de Rectangle peut contenir des objects de la classe SlandedRectangle qui héritent de Rectangle.
-Cependant, les méthodes surface, contains et hull de la classe Dessin peuvent ne pas fonctionner correctement avec des SlantedRectangle. Ces méthodes ont été définies en supposant que les  rectangles inclinés, ces méthodes nécessiteraient une adaptation pour prendre en   compte l’angle d’inclinaison.
-
-  
-                                                                                             
-                                                             EXERCICE 12
-
-1. Redéfinition de contains(Rectangle)
-La classe Rectangle possède une méthode contains(Rectangle) qui vérifie si un rectangle donné est entièrement contenu dans l'instance actuelle. Lorsque nous introduisons SlantedRectangle, cette méthode doit être adaptée pour prendre en compte l'inclinaison du rectangle. Dans sa forme actuelle, elle ne fonctionne qu'avec des rectangles aux côtés parallèles aux axes, ce qui signifie qu'elle ne peut pas correctement déterminer si un SlantedRectangle est contenu dans un Rectangle.
-2. Ajout de contains(SlantedRectangle)
-Pour pallier cette limitation, on ajoute une méthode contains(SlantedRectangle) à Rectangle et à SlantedRectangle. Cependant, cette approche a encore des limitations:
-•	Un SlantedRectangle pourrait être incliné d'une manière qui ne permet pas une simple comparaison avec les bords du Rectangle.
-•	La méthode pourrait ne pas gérer tous les cas où les rectangles inclinés s'entrecroisent ou touchent sans être strictement à l'intérieur.
-3. Cas non couverts
-Même après l'ajout de contains(SlantedRectangle), certains cas restent problématiques :
-•	Si un SlantedRectangle chevauche un Rectangle mais dépasse légèrement en dehors.
-•	Si deux SlantedRectangle ont des inclinaisons qui rendent la vérification complexe, par exemple lorsque leurs sommets sont contenus mais que leurs bords dépassent.
-Une solution serait d'utiliser des tests géométriques avancés basés sur les polygones et les intersections, au lieu de simples comparaisons de coordonnées
-
-*/
-
-
-
-
-
-
-
-class C {
-    char ch = 'C';
-    char getCh() { return ch; }
-}
-
-class D extends C {
-    char ch = 'D';  
-    char getCh() { return ch; }  
-}
-C c = new C();
-C cd = new D();
-D d = new D();
-public static void main(String[] args){
-System.out.println(c.ch);    
-System.out.println(c.getCh()); 
-
-System.out.println(cd.ch);   
-System.out.println(cd.getCh()); 
-
-System.out.println(d.ch);    
-System.out.println(d.getCh()); 
-
-    //1)Il s'agit ici d'une Surcharge
-    
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode A
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B */
-//main
 }
