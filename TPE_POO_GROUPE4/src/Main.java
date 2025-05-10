@@ -44,7 +44,31 @@ public class Main {
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
 
+        A a = new A();
+        A ab = new B();
+        B b = new B();
+        a.f(a); /* void f(A o) dans A */
+        a.f(ab); /* void f(A o) dans A */
+        a.f(b); /* void f(A o) dans A */
+        ab.f(a);/* void f(A o) dans B */
+        ab.f(ab);/* void f(A o) dans B */
+        ab.f(b);/* void f(A o) dans B */
+        b.f(a);/* void f(A o) dans B */
+        b.f(ab);/* void f(A o) dans B */
+        b.f(b);/* void f(A o) dans B */
+
     }
+}
+
+class A {
+   void f(A o) {
+      System.out.println("void f(A o) dans A");
+   }
+}
+class B extends A {
+   void f(A o) {
+     System.out.println("void f(A o) dans B");
+   }
 }
 
 
