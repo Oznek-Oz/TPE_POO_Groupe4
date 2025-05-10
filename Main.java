@@ -43,21 +43,6 @@ public class Main {
 
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
-      
-      //EXERCICE 8-9-10
-        A a = new A ();
-        A ab =new B ();
-        B b = new B ();
-
-        a.f(a);
-        a.f(ab);
-        a.f(b);
-        ab.f(a);
-        ab.f(ab);
-        ab.f(b);
-        b.f(a);
-        b.f(ab);
-        b.f(b);
 
     }
 }
@@ -201,6 +186,7 @@ class SlantedRectangle extends Rectangle {
         super(p1 , longueur , hauteur);
         this.angle = angle;
         float ANGLE = angle * (float)Math.PI / 180 ;
+        Point p3 = new Point(longueur * (float)Math.cos(ANGLE) , hauteur * (float)Math.sin(ANGLE));
     }
 
     /** MÃ©thode de la rotation
@@ -234,55 +220,4 @@ class SlantedRectangle extends Rectangle {
     public void afficherCoordonnee (String nomPoint , Point p) {
         System.out.println("Les coordonnÃ©es du point " + nomPoint + " sont : (" + p.getAbs() + " ; " + p.getOrd() + ")");
     }
-
-
-}
-
-
-
-// *************exercice 9************
-
-class A {
-    // Ajout de la methode suivante a la class B
-    void f(A o) {
-        System.out.println("void f(A o) dans A classe:"+o.getClass());
-    }
-    //1)Il s'agit ici d'une redefinition
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode B
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-*/
-}
-//***********EXERCICE 10***********
-class B extends A {
-     // Ajout de la methode suivante a la class A
-   // void f(A o) {
-    void f(A o) {
-        System.out.println("void f(A o) dans B ");
-    }
-    void f(B o) {
-        System.out.println("void f(B o) dans B");
-
-}
-    //1)Il s'agit ici d'une Surcharge
-    
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode A
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B */
 }
