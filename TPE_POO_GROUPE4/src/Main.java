@@ -30,6 +30,11 @@ public class Main {
         SlantedRectangle srect1 = new SlantedRectangle(P1 , 10 , 5);
 
         srect1.containRect(rect1);
+        //Rotation
+        System.out.print("\nAVANT ROTATION: \n");
+        srect1.rotate(0);
+        System.out.print("\nAPRES ROTATION LES NOUVELLES COORDONNEES SONT: \n\n");
+        srect1.rotate(2);
 
         Point basDroit = new Point(srect1.point.getAbs() + srect1.longueur , srect1.point.getOrd());
         Point hautGauche = new Point(srect1.point.getAbs(), srect1.point.getOrd() + srect1.hauteur);
