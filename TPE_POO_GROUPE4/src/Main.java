@@ -186,7 +186,6 @@ class SlantedRectangle extends Rectangle {
         super(p1 , longueur , hauteur);
         this.angle = angle;
         float ANGLE = angle * (float)Math.PI / 180 ;
-        Point p3 = new Point(longueur * (float)Math.cos(ANGLE) , hauteur * (float)Math.sin(ANGLE));
     }
 
     /** MÃ©thode de la rotation
