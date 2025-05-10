@@ -13,7 +13,7 @@ public class Main {
 
         srect1.afficherCoordonnee("P2" , P2);
         srect1.containRect(rect1);
-
+        //Rotation
         System.out.print("\nAVANT ROTATION: \n");
         srect1.rotate(0);
         System.out.print("\nAPRES ROTATION LES NOUVELLES COORDONNEES SONT: \n\n");
