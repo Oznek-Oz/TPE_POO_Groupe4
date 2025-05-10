@@ -10,7 +10,7 @@ Consigne pour les membres
 | TCHIKAYA FAMI K.F  | @Oznek-Oz               | exercices(1,2,7,8)   |
 | TAFFO TEMATIO P.O  | @Taffotematio           | exercices(5,12,13)   |
 | NGOUGOURE MEFIRE   | @bicha56                | exercices(3,6,11)    |
-| NGOUPAURE SAÏDA    | @ngoupaure              | exercices(4,9,10)    |
+| NGOUPAURE SAÏDA    | @goupaure               | exercices(4,9,10)    |
 
 ## Objectif
 
