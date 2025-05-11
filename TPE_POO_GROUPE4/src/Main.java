@@ -1,17 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-        /** CrÃ©ation des points **/
+        /** Création des points **/
         Point P1 = new Point(4 , 8);
         Point P2 = new Point(5 , 6);
         Point P3 = new Point(14 , 15);
         Point P4 = new Point(20 , 21);
 
-        /** CrÃ©ation des rectangles **/
+        /** Création des rectangles **/
         Rectangle rect1 = new Rectangle(P1 , 10 , 5);
         Rectangle rect2 = new Rectangle(P2 , P3);
         Rectangle rect3 = new Rectangle(P3 , P4);
 
-        /** CrÃ©ation d'un tableau de rectangles **/
+        /** Création d'un tableau de rectangles **/
         Rectangle[] tabRect = new Rectangle[3];
         tabRect[0] = rect1; tabRect[1] = rect2; tabRect[2] = rect3;
 
@@ -24,17 +24,12 @@ public class Main {
                 + (rectMin.point.getOrd() + rectMin.hauteur) + ")\n" +
                 "Sa longueur est : " + rectMin.longueur + " et sa hauteur est : " + rectMin.hauteur + "\n");
 
-        System.out.println(rect2.sameAs(rect3) ? "\nCes rectangles sont identiques." : "Ces rectangles sont diffÃ©rents.");
+        System.out.println(rect2.sameAs(rect3) ? "\nCes rectangles sont identiques." : "Ces rectangles sont différents.");
 
-        /** CrÃ©ation des slanted rectangles **/
+        /** Création des slanted rectangles **/
         SlantedRectangle srect1 = new SlantedRectangle(P1 , 10 , 5);
 
-        srect1.containRect(rect1);
-        //Rotation
-        System.out.print("\nAVANT ROTATION: \n");
-        srect1.rotate(0);
-        System.out.print("\nAPRES ROTATION LES NOUVELLES COORDONNEES SONT: \n\n");
-        srect1.rotate(2);
+        srect1.contains(rect1);
 
         Point basDroit = new Point(srect1.point.getAbs() + srect1.longueur , srect1.point.getOrd());
         Point hautGauche = new Point(srect1.point.getAbs(), srect1.point.getOrd() + srect1.hauteur);
@@ -49,31 +44,21 @@ public class Main {
         System.out.print("\n/** APRES ROTATION LES NOUVELLES COORDONNEES SONT: **/\n");
         srect1.rotate(45);
 
-//EXERCICE-8-9-10
+        /* EXERCICE8 */
         A a = new A();
         A ab = new B();
         B b = new B();
         a.f(a); /* void f(A o) dans A */
-        a.f(ab); /* void f(A o) dans A */
+        a.f(ab); /* void f(A o) dans A */ //car ab est une instance de B (qui hérite de A et de ses méthodes)
         a.f(b); /* void f(A o) dans A */
-        ab.f(a);/* void f(A o) dans B */
-        ab.f(ab);/* void f(A o) dans B */
-        ab.f(b);/* void f(A o) dans B */
-        b.f(a);/* void f(A o) dans B */
-        b.f(ab);/* void f(A o) dans B */
-        b.f(b);/* void f(A o) dans B */
-    }
-}
+        ab.f(a); /* void f(A o) dans B */
+        ab.f(ab); /* void f(A o) dans B */
+        ab.f(b); /* void f(A o) dans B */
+        b.f(a); /* void f(A o) dans B */
+        b.f(ab); /* void f(A o) dans B */
+        b.f(b); /* void f(A o) dans B */
 
-class A {
-   void f(A o) {
-      System.out.println("void f(A o) dans A");
-   }
-}
-class B extends A {
-   void f(A o) {
-     System.out.println("void f(A o) dans B");
-   }
+    }
 }
 
 
@@ -99,11 +84,14 @@ class Point {
         this.ord = ( abs - centreRotation.getAbs()) * ((float) Math.sin(ANGLE)) + (ord - centreRotation.getOrd()) * ((float) Math.cos(ANGLE)) + centreRotation.getOrd() ;
     }*/
     public Point rotate (Point centreRotation , float angle){
-        float ANGLE = angle * ((float)Math.PI) / 180;
+        float ANGLE = (float) Math.toRadians(angle);
 
         this.abs = ( abs - centreRotation.getAbs()) * ((float) Math.cos(ANGLE)) - (ord - centreRotation.getOrd()) * ((float) Math.sin(ANGLE)) + centreRotation.getAbs() ;
         this.ord = ( abs - centreRotation.getAbs()) * ((float) Math.sin(ANGLE)) + (ord - centreRotation.getOrd()) * ((float) Math.cos(ANGLE)) + centreRotation.getOrd() ;
         return new Point(abs , ord);
+    }
+    public void afficherCoordonnee (String nomPoint) {
+        System.out.println("Les coordonnées du point " + nomPoint + " sont : (" + getAbs() + " ; " + getOrd() + ")");
     }
 
     //getters
@@ -147,13 +135,13 @@ class Rectangle{
         return this.longueur * this.hauteur ;
     }
 
-    boolean containPoint (Point point){
+    boolean contains(Point point){
         return ((point.getAbs() >= this.point.getAbs()) && (point.getAbs() <= (this.point.getAbs() + this.longueur))) && ((point.getOrd() >= this.point.getOrd()) && (point.getOrd() <= (this.point.getOrd() + this.hauteur)));
     }
 
-    boolean containRect ( Rectangle rectangle){
+    boolean contains(Rectangle rectangle){
         Point upRight = new Point(rectangle.point.getAbs() + rectangle.longueur , rectangle.point.getOrd() + rectangle.hauteur);
-        return (this.containPoint(upRight) && this.containPoint(rectangle.point));
+        return (this.contains(upRight) && this.contains(rectangle.point));
     }
 
     void translateof(float x, float y){
@@ -214,18 +202,17 @@ class SlantedRectangle extends Rectangle {
     SlantedRectangle(Point p1 , float longueur , float hauteur , float angle){
         super(p1 , longueur , hauteur);
         this.angle = angle;
-        float ANGLE = angle * (float)Math.PI / 180 ;
     }
 
-    /** MÃ©thode de la rotation
+    /** Méthode de la rotation
     /* L'expression analytique de la rotation est :
-    *  X' = (X-Xa)cos(Ã¸) - (Y-Ya)sin(Ã¸) + Xa
-    *  Y' = (X-Xa)sin(Ã¸) + (Y-Ya)cos(Ã¸) + Ya
+    *  X' = (X-Xa)cos(ø) - (Y-Ya)sin(ø) + Xa
+    *  Y' = (X-Xa)sin(ø) + (Y-Ya)cos(ø) + Ya
 
-    *  avec (Xa,Ya) les coordonnÃ©es du centre de la rotation
+    *  avec (Xa,Ya) les coordonnées du centre de la rotation
     *  qui coorespond dans notre cas au point "bas gauche"
 
-    * M(X,Y) reprÃ©sente le point Ã  faire roter et M'(X',Y') l'image de M par la rotation
+    * M(X,Y) représente le point à faire roter et M'(X',Y') l'image de M par la rotation
 
     /* Pour la rotate, il s'agit de faire tourner chacun des points "bas droite",
        "Haut gauche" et "Haut droite" d'un angle "angle"
@@ -233,129 +220,24 @@ class SlantedRectangle extends Rectangle {
 
     /* EXERCICE2 */
     void rotate(float angle) {
-        Point basDroit = new Point(this.point.getAbs() + this.longueur , this.point.getOrd());
-        Point hautGauche = new Point(this.point.getAbs() , this.point.getOrd() + this.hauteur);
-        Point hautDroit = new Point(this.point.getAbs() + this.longueur , this.point.getOrd() + hauteur);
-
-        basDroit.rotate(this.point , angle);
-        hautGauche.rotate(this.point , angle);
-        hautDroit.rotate(this.point , angle);
-
-        afficherCoordonnee("bas-droit" , basDroit);
-        afficherCoordonnee("haut-gauche" , hautGauche);
-        afficherCoordonnee("haut-droit" , hautDroit);
+        //Point bas-droit
+        new Point(this.point.getAbs() + this.longueur , this.point.getOrd()).rotate(this.point, angle).afficherCoordonnee("bas-droit");
+        new Point(this.point.getAbs() , this.point.getOrd() + this.hauteur).rotate(this.point, angle).afficherCoordonnee("haut-gauche");
+        new Point(this.point.getAbs() + this.longueur , this.point.getOrd() + hauteur).rotate(this.point, angle).afficherCoordonnee("haut-droit");
     }
     public void afficherCoordonnee (String nomPoint , Point p) {
-        System.out.println("Les coordonnÃ©es du point " + nomPoint + " sont : (" + p.getAbs() + " ; " + p.getOrd() + ")");
+        System.out.println("Les coordonnées du point " + nomPoint + " sont : (" + p.getAbs() + " ; " + p.getOrd() + ")");
     }
-
-
 }
 
-
-
-// *************exercice 9************
-
+/* EXERCICE3 */
 class A {
-    // Ajout de la methode suivante a la class B
     void f(A o) {
-        System.out.println("void f(A o) dans A classe:"+o.getClass());
+        System.out.println("void f(A o) dans A");
     }
-    //1)Il s'agit ici d'une redefinition
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode B
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-*/
 }
-//***********EXERCICE 10***********
 class B extends A {
-     // Ajout de la methode suivante a la class A
-   // void f(A o) {
     void f(A o) {
-        System.out.println("void f(A o) dans B ");
+        System.out.println("void f(A o) dans B");
     }
-    void f(B o) {
-        System.out.println("void f(B o) dans B");
-
-}
-// Taffo-Oneil(exercices-5-12-13)
-
-/*
-                                        TPE : PROGRAMMATION ORIENTE OBJECT
-
-
-                                                    Exercice 5
-
-
-  La réponse est oui, la classe DESSIN peut contenir des slantedRectangle. En effet, grâce au polymorphisme, un tableau de Rectangle peut contenir des objects de la classe SlandedRectangle qui héritent de Rectangle.
-Cependant, les méthodes surface, contains et hull de la classe Dessin peuvent ne pas fonctionner correctement avec des SlantedRectangle. Ces méthodes ont été définies en supposant que les  rectangles inclinés, ces méthodes nécessiteraient une adaptation pour prendre en   compte l’angle d’inclinaison.
-
-  
-                                                                                             
-                                                             EXERCICE 12
-
-1. Redéfinition de contains(Rectangle)
-La classe Rectangle possède une méthode contains(Rectangle) qui vérifie si un rectangle donné est entièrement contenu dans l'instance actuelle. Lorsque nous introduisons SlantedRectangle, cette méthode doit être adaptée pour prendre en compte l'inclinaison du rectangle. Dans sa forme actuelle, elle ne fonctionne qu'avec des rectangles aux côtés parallèles aux axes, ce qui signifie qu'elle ne peut pas correctement déterminer si un SlantedRectangle est contenu dans un Rectangle.
-2. Ajout de contains(SlantedRectangle)
-Pour pallier cette limitation, on ajoute une méthode contains(SlantedRectangle) à Rectangle et à SlantedRectangle. Cependant, cette approche a encore des limitations:
-•	Un SlantedRectangle pourrait être incliné d'une manière qui ne permet pas une simple comparaison avec les bords du Rectangle.
-•	La méthode pourrait ne pas gérer tous les cas où les rectangles inclinés s'entrecroisent ou touchent sans être strictement à l'intérieur.
-3. Cas non couverts
-Même après l'ajout de contains(SlantedRectangle), certains cas restent problématiques :
-•	Si un SlantedRectangle chevauche un Rectangle mais dépasse légèrement en dehors.
-•	Si deux SlantedRectangle ont des inclinaisons qui rendent la vérification complexe, par exemple lorsque leurs sommets sont contenus mais que leurs bords dépassent.
-Une solution serait d'utiliser des tests géométriques avancés basés sur les polygones et les intersections, au lieu de simples comparaisons de coordonnées
-
-*/
-
-
-
-
-
-
-
-class C {
-    char ch = 'C';
-    char getCh() { return ch; }
-}
-
-class D extends C {
-    char ch = 'D';  
-    char getCh() { return ch; }  
-}
-C c = new C();
-C cd = new D();
-D d = new D();
-public static void main(String[] args){
-System.out.println(c.ch);    
-System.out.println(c.getCh()); 
-
-System.out.println(cd.ch);   
-System.out.println(cd.getCh()); 
-
-System.out.println(d.ch);    
-System.out.println(d.getCh()); 
-
-    //1)Il s'agit ici d'une Surcharge
-    
-
-    //2)le fragment de programme de l'exercice 8 va afficher apres l'ajout de la methode A
-    /*  void f(A o) dans A classe:class A
-        void f(A o) dans A classe:class B
-        void f(A o) dans A classe:class B
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B 
-        void f(A o) dans B */
-//main
 }
