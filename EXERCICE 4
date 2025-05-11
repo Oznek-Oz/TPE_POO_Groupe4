@@ -1,0 +1,20 @@
+            // exercice4// 
+        Point P = new Point(1,2);
+        Rectangle r = new Rectangle (P,2,3);
+        Rectangle t = new SlantedRectangle(P,2,3);
+        SlantedRectangle s = new SlantedRectangle(P,2,3);
+
+        //Cette methode ne va pas compiller correctement car r n'est pas defini pour le rectangle ici
+        System.out.println(r.Surface());
+        //r.rotate(2);
+        //Systems.out.println(r.contains(P));
+
+         //cette methode ne va pas compiller correctement car t ici n'est pas reconnu dans la classe principale 
+        System.out.println(t.Surface());
+        //t.rotate(2);
+        //System.out.println(t.contains(P));
+
+        //cette methode va compile correctement et sera effectivement appeler a etre executer 
+        System.out.println(s.Surface());
+        s.rotate(2);
+        System.out.println(s.contains(P));
